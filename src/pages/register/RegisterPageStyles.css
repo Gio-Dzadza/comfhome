@@ -1,0 +1,199 @@
+.RegisterPageWrapper{
+    display: grid;
+    justify-items: start;
+    grid-template-rows: 17vh 5.4vh 81px 81px 81px 81px 65px 81px 8vh 8vh 7vh;
+    max-width: 407px;
+    width: 100vw;
+    align-items: end;
+}
+
+.complexRegisterWrapper{
+    display: flex;
+    justify-items: start;
+    max-width: 407px;
+    width: 100vw;
+    align-items: start;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.RegisterLogoWrapper{
+    display: grid;
+    justify-items: center;
+    height: fit-content;
+    margin-bottom: 3.5vh;
+    margin-left: 7%;
+}
+
+.RegisterTitleWrapper{
+    margin-left: 7%;
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: 14px auto;
+    align-items: center;
+}
+
+.RegisterTitle{
+    font-size: 18px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    color: #101010;
+    width: max-content;
+}
+
+.RegisterFormWrapper{
+    margin-left: 10%;
+    display: grid;
+    grid-template-rows: 26px 220px;
+    width: -webkit-fill-available;
+    margin-right: 10%;
+}
+
+.RegisterFormText{
+    font-size: 13.4px;
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+    color: #5F5F5F;
+}
+
+.RegisterInputStyles{
+    border: 0;
+    border-bottom: 1.2px solid #E1E1E1;
+    padding-bottom: 10px;
+    font-size: 12px;
+    padding-left: 9px;
+    padding-right: 9px;
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+    outline: none;
+    width: -webkit-fill-available;
+    border-radius: 0;
+}
+
+.RegisterPhoneNumberFormDropdownBtn{
+    display: grid;
+    grid-template-columns: 26px auto;
+    align-items: center;
+    padding-left: 4px;
+    cursor: pointer;
+}
+
+.RegisterPhoneNumberFormDropdownBtn span{
+    color: #7D7D7D;
+}
+
+.RegisterPhoneNumberFormText{
+    display: grid;
+    border: 0;
+    border-bottom: 1.2px solid #E1E1E1;
+    padding-bottom: 32px;
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+    outline: none;
+    width: -webkit-fill-available;
+    border-radius: 0;
+    grid-template-columns: 49px max-content auto;
+    align-items: center;
+}
+
+.district{
+    display: grid;
+    border: 0;
+    /* border-bottom: 1.2px solid #E1E1E1; */
+    padding-bottom: 32px;
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+    outline: none;
+    width: -webkit-fill-available;
+    border-radius: 0;
+    grid-template-columns: 49px max-content auto;
+    align-items: center;
+}
+
+.selectBox{
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-bottom-color: #E1E1E1;
+}
+
+.RegisterPhoneInputStyles{
+    border: 0;
+    font-size: 0.7rem;
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+    outline: none;
+    border-radius: 0;
+    padding-left: 9px;
+    padding-right: 0;
+    width: 89%;
+    max-width: 227px;
+}
+
+.isdStyles{
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+    color: #a9a9a9;
+}
+
+.RegisterPhoneNumberFormWrapper{
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+}
+
+.RegistrationNumberPopUpWrapper{
+    position: fixed;
+    width: 100vw;
+    background-color: #0000008a;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 100lvh;
+}
+
+.RegistrationNumberPopUpOptionsStyle{
+    font-size: 18px;
+    margin-top: 13px;
+    padding-left: 12px;
+    cursor: pointer;
+}
+
+.RegistrationNumberPopUpStyle{
+    padding-top: 12px;
+    max-width: 407px;
+    width: 80vw;
+    background-color: white;
+    height: 100vh;
+    max-height: 220px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    z-index: 100;
+}
+
+.RegisterBtnContainer{
+    width: 100%;
+    display: grid;
+    justify-items: center;
+}
+
+.RegisterBtn{
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    font-family: 'Prompt', sans-serif;
+    width: 76%;
+    height: 45px;
+    border-radius: 14px;
+    filter: drop-shadow(0px 2px 2px black);
+    transition: all 0.45s;
+}
+
+.RegisterBtn:hover{
+    background-color: #D9D9D9;
+    color: black;
+    filter: drop-shadow(0px 2px 2px #D9D9D9);
+}

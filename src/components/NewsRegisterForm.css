@@ -1,0 +1,307 @@
+.multi-select-dropdown {
+    position: relative;
+}
+
+.selected-users {
+display: flex;
+flex-wrap: wrap;
+padding: 5px;
+border: 1px solid #ccc;
+border-radius: 4px;
+min-height: 40px;
+align-items: center;
+}
+
+.selected-users span {
+background-color: #007bff;
+color: #fff;
+padding: 2px 5px;
+margin: 2px;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.selected-users span:hover {
+background-color: #0056b3;
+}
+
+.selected-users span::after {
+content: ' ';
+display: inline-block;
+width: 10px;
+}
+
+.selected-users span:last-child::after {
+display: none;
+}
+
+.selected-services {
+display: flex;
+flex-wrap: wrap;
+padding: 5px;
+border: 1px solid #ccc;
+border-radius: 4px;
+min-height: 40px;
+align-items: center;
+}
+
+.selected-services span {
+background-color: #007bff;
+color: #fff;
+padding: 2px 5px;
+margin: 2px;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.selected-services span:hover {
+background-color: #0056b3;
+}
+
+.selected-services span::after {
+content: ' ';
+display: inline-block;
+width: 10px;
+}
+
+.selected-services span:last-child::after {
+display: none;
+}
+
+.green-service {
+    background-color: #80bdb3 !important;
+    border-radius: 5px;
+}
+
+
+.yellow-service{
+    background-color: #ffe1a5 !important;
+    border-radius: 5px;
+}
+
+.white-service{
+    background-color: #fff !important;
+}
+
+.dep-upreg-btn{
+    display: flex;
+    justify-content: space-around;
+}
+
+.upload-btn{
+    background-color:transparent !important;
+    color: #707070 !important;
+}
+
+
+@import url('https://free.bboxtype.com/embedfonts/?family=FiraGO:400');
+
+.expired{
+    background-color: red;
+}
+.notExpired{
+    background-color: gray;
+}
+
+.docs-cell{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.expired-row {
+    background-color: #f1c0c0 !important;
+}
+
+.expired-mayor-row {
+    background-color: red !important;
+}
+
+.close-to-expired-mayor-row{
+    background-color: #fcd280 !important;
+}
+
+.completed-row{
+    background-color: #c4e7e1 !important;
+}
+
+.actions-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.docs-inner-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-heading{
+    padding: 10px 0px;
+    font-family: 'FiraGO', sans-serif !important;
+    color: #505050;
+}
+
+.news-reg-form-container{
+    background-color: white;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+.news-reg-form{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 5px;
+    height: 700px;
+}
+
+.news-name{
+    grid-column: 1/span 4;
+}
+
+
+.services-cont{
+    grid-column: 1/span 4;
+    border: 1px solid rgb(0,0,0, 0.3);
+    border-radius: 5px;
+    position: relative;
+    margin: 10px 0px;
+    padding: 10px;
+}
+
+.services-label{
+    background-color: white;
+    position: absolute;
+    top: -15px;
+    left: 5px;
+    padding: 0px 5px;
+    color: #404040;
+    font-family: 'FiraGO', sans-serif !important;
+}
+
+
+.inner-deadline-cont{
+    grid-column: span 1;
+}
+
+.service-status-cont{
+    grid-column: span 1;
+}
+
+.mayor-deadline-cont{
+    grid-column: span 1;
+}
+
+.spec-cont{
+    grid-column: 1/span 3;
+    margin: 10px 0px;
+}
+
+.news-spec-select-dropdown{
+    margin: 5px 0px;
+}
+
+.news-selected-users{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 40px;
+    align-items: center;
+}
+
+.news-selected-users span{
+    background-color: #3bb09e;
+    color: #fff;
+    padding: 2px 5px;
+    margin: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'FiraGO', sans-serif !important;
+}
+
+.service-select{
+    width: 70%;
+    margin: 10px 5px;
+    border-radius: 5px;
+    border-color: #909090;
+    color: #404040;
+    font-family: 'FiraGO', sans-serif !important;
+    padding: 5px;
+}
+
+.spec-select-cont{
+    font-family: 'FiraGO', sans-serif !important;
+    border-radius: 5px;
+    border: 1px solid rgb(0,0,0, 0.3);
+    color: #303030;
+    padding: 5px;
+}
+
+.news-stat{
+    grid-column: 1/span 4;
+}
+
+.news-docs-cont{
+    grid-column: 1/span 4;
+    border: 1px solid rgb(0,0,0, 0.3);
+    border-radius: 5px;
+    padding: 5px;
+    position: relative;
+    margin-top: 15px;
+}
+
+.docs-label{
+    position: absolute;
+    background-color: #ffff;
+    top: -15px;
+    left: 5px;
+    padding: 0px 5px;
+    color: #404040;
+    font-family: 'FiraGO', sans-serif !important;
+}
+
+.doc-add-btn-cont{
+    color: #404040;
+    font-family: 'FiraGO', sans-serif !important;
+    display: none;
+}
+
+.reg-close-btns-cont{
+    grid-column: 1/span 4;
+    padding: 10px 0px;
+}
+
+.news-reg-btn-cont{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5px 0px;
+}
+
+.news-reg-btn{
+    width: 70%;
+}
+
+.news-close-btn-cont{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5px 0px;
+}
+
+.news-close-btn{
+    width: 70%;
+}
+
+@media (max-width: 767px) {
+    .news-reg-form{
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        gap: 5px;
+        height: 630px;
+    }
+}
