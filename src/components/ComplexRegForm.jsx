@@ -18,6 +18,7 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
     const [services, setServices] = useState([]);
     const [serviceId, setServiceId] = useState([]);
     const [thingId, setThingId] = useState([]);
+    const [places, setPlaces] = useState([]);
 
     useEffect(()=>{
         const unsub = ()=>{
@@ -61,6 +62,15 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
                                     updatedThingId[index][service.service_id] = service.thing_id;
                                     return updatedThingId;
                                 });
+
+                                setPlaces(prevPlaces => {
+                                    const updatedPlace = [...prevPlaces];
+                                    if (!updatedPlace[index]) {
+                                        updatedPlace[index] = {};
+                                    }
+                                    updatedPlace[index][service.service_id] = service.place;
+                                    return updatedPlace;
+                                });
                             }
                         });
                     }
@@ -80,6 +90,7 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
         formData.append('company', company);
         formData.append('districtId', districtId);
         formData.append('thingIds', JSON.stringify(thingId));
+        formData.append('places', JSON.stringify(places));
         for(var index = 0; index < serviceId.length; index++){
             const sid = serviceId[index];
             formData.append('serviceIds', sid)
@@ -100,6 +111,7 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
             setDistrictId('');
             setServiceId([]);
             setThingId([]);
+            setPlaces([]);
             setShowRegForm(false);
         } else {
             const error = await response.data;
@@ -117,6 +129,7 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
         formData.append('company', company);
         formData.append('districtId', districtId);
         formData.append('thingIds', JSON.stringify(thingId));
+        formData.append('places', JSON.stringify(places));
         for(var index = 0; index < serviceId.length; index++){
             const sid = serviceId[index];
             formData.append('serviceIds', sid)
@@ -137,6 +150,7 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
             setDistrictId('');
             setServiceId([]);
             setThingId([]);
+            setPlaces([]);
             setComplex('');
             setEditing(false);
         } else {
@@ -170,6 +184,17 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
             return updatedThingId;
         });
     };
+    
+    const handlePlace = (index, itemId, placeValue) => {
+        setPlaces(prevPlace => {
+            const updatedPlace = [...prevPlace];
+            if (!updatedPlace[index]) {
+                updatedPlace[index] = {};
+            }
+            updatedPlace[index][itemId] = placeValue;
+            return updatedPlace;
+        });
+    };
 
     const removeService = (service, listItemIndex) => {
         const updatedServices = services.filter((serviceItem, index) => {
@@ -190,7 +215,14 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
                 updatedThingId.splice(listItemIndex, 1);
                 return updatedThingId;
             });
-        }
+        };
+        if (listItemIndex !== -1) {
+            setPlaces(prevPlaces => {
+                const updatedPlace = [...prevPlaces];
+                updatedPlace.splice(listItemIndex, 1);
+                return updatedPlace;
+            });
+        };
     };
     
     return (
@@ -255,6 +287,14 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
                                                 type='text'
                                                 value={thingId[index] && thingId[index][serviceItem && serviceItem.id] || ''}
                                                 onChange={(e) => handleThingId(index, serviceItem.id, e.target.value)}
+                                            />
+                                        </label>
+                                        <label>
+                                            <span>Place: </span>
+                                            <input
+                                                type='text'
+                                                value={places[index] && places[index][serviceItem && serviceItem.id] || ''}
+                                                onChange={(e) => handlePlace(index, serviceItem.id, e.target.value)}
                                             />
                                         </label>
                                     </div>
