@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useFetch } from '../hooks/useFetch'
 import UserDefault from  '../assets/userDefault.png';
 import { useAuthContext } from '../hooks/useAuthContext';
 import Axios from 'axios';
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export default function UsersList({updateList, setUpdateList, setEditing, setUserPhone, setUserId}) {
     const [authenticated, setAuthenticated] = useState(false);
@@ -24,7 +26,6 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
                     },
                 }
                 ).then((response)=>{
-                    // console.log(response)
                     if(!response.data.auth){
                         setAuthenticated(true);
                     } else{
@@ -34,7 +35,6 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
                             const notDeletedUsers = regularUser && regularUser.filter(item => item.deleted_at == null);
                             setUserList(notDeletedUsers);
                         };
-                        // setComplexes(response.data.result);
                         setAuthenticated(false);
                         setIsPending(false);
                         setError(null);
@@ -69,7 +69,6 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
                     "x-access-token": context.userAccessToken, // Include the token in the headers
                 },
             }).then((response)=>{
-                // console.log(response);
                 if(response.data.auth){
                     console.log(id + ' ' + response.data);
                 } else{
@@ -78,7 +77,6 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
                 };
                 if(response.data.deleted){
                     console.log(id + ' ' + response.data.message);
-                    // Update the UI
                     const updatedUsers = userList && userList.filter((user)=> user.id !== id);
                     setUserList(updatedUsers);
                     setAuthenticated(false);
@@ -96,7 +94,7 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
     };
 
     return (
-        <div>
+        <div className='container d-flex flex-column col-lg-4'>
             {isPending && <div>Loading users...</div>}
             {error && <div>{error}</div>}
             {
@@ -108,15 +106,41 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
             }
             {
                 !authenticated && (
-                    <ul>
+                    <ul className='usersList'>
                         {
                             userList && userList.map((item, index)=>(
-                                <li key={index}>
-                                    <p>{item.name ? item.name : 'No Name'}</p>
-                                    <img src={item.avatar ? `http://localhost:3001/uploads/users/${item.id}/${item.avatar}` : UserDefault} alt="userAvatar" />
-                                    <p>{item.phone}</p>
-                                    <div onClick={()=>{handleEditing(item.phone, item.id)}}>Edit</div>
-                                    <div onClick={()=>{handleDelete(item.id)}}>Delete</div>
+                                <li 
+                                    key={index} 
+                                    className='d-flex align-items-center justify-content-between userItem'
+                                >
+                                    <div className='userImageContainer'>
+                                        <img className='userImage'
+                                            src={item.avatar ? `http://localhost:3001/uploads/users/${item.id}/${item.avatar}` : UserDefault} 
+                                            alt="userAvatar" 
+                                        />
+                                    </div>
+                                    <div style={{maxWidth:"141px", minWidth:"141px"}}>
+                                        <p>{item.name ? item.name : 'No Name'}</p>
+                                    </div>
+                                    <div style={{maxWidth:"141px", minWidth:"78px"}}>
+                                        <p>{item.phone}</p>
+                                    </div>
+                                    <div style={{maxWidth:"141px", minWidth:"auto"}}>
+                                        <IconButton 
+                                            className='userEdit' 
+                                            onClick={()=>{handleEditing(item.phone, item.id)}}
+                                            style={{padding:"0"}}
+                                        >
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton 
+                                            className='userDelete' 
+                                            onClick={()=>{handleDelete(item.id)}}
+                                            style={{padding:"0"}}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </div>
                                 </li>
                             ))
                         }

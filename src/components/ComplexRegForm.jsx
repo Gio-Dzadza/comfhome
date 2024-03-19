@@ -226,103 +226,107 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
     };
     
     return (
-        <div className='complexRegisterWrapper'>
-            <div onClick={()=>{setShowRegForm(false); setEditing(false)}} className='RegisterTitleWrapper'>
+        <div className='container d-flex flex-column logo-nav-wrapper'>
+            <div onClick={()=>{setShowRegForm(false); setEditing(false)}} className='container col-lg-3 d-flex align-items-end TitleWrapper'>
                 <div>
                     <BackBtnIcon/>
                 </div>
                 <div>
                     {
                         editing ? (
-                            <h2 className='RegisterTitle'>Update complex</h2>
+                            <h2 className='Title'>Update complex</h2>
                         ):(
-                            <h2 className='RegisterTitle'>Registration</h2>
+                            <h2 className='Title'>Registration</h2>
                         )
                     }
                 </div>
             </div>
-            <div className='RegisterFormWrapper'>
-                <div>
-                    <span className='RegisterFormText'>Address</span>
+            <div className='container col-lg-3 d-flex flex-column form-wrapper buildingAddFormWrapper'>
+                <div className='d-flex flex-column inputWrapper'>
+                    <div>
+                        <span className='FormText'>Address</span>
+                    </div>
+                    <input
+                        className='InputStyles'
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Enter Address"
+                    />
                 </div>
-                <input
-                    className='RegisterInputStyles'
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Enter Address"
-                />
-            </div>
-            <div className='RegisterFormWrapper'>
-                <div>
-                    <span className='RegisterFormText'>District</span>
-                </div>
-                <div className='district'>
-                    <label>
-                        <select className='selectBox' required onChange={(e)=> {handleDistrict(e)}} value={district}>
-                            <option className='optionItem'></option>
-                            { districts && districts.result.map(item =>(
-                                <option className='optionItem' value={item.district_name} key={item.id}>{item.district_name}</option>
-                            ))}
-                        </select>
-                    </label>
-                </div>
-            </div>
-            <div className='RegisterFormWrapper'>
-                <div>
-                    <span className='RegisterFormText'>Service</span>
-                </div>
-                <div className='district'>
-                    <label>
-                        <div className="proj-multi-select-dropdown-cont">
-                            <div>
-                                {services && services.map((serviceItem, index) => (
-                                    <div key={index}>
-                                        <span onClick={() => removeService(serviceItem, index)}>
-                                            {`${serviceItem.service_name}`} &#10005;
-                                        </span>
-                                        <label>
-                                            <span>ThingId: </span>
-                                            <input
-                                                type='text'
-                                                value={thingId[index] && thingId[index][serviceItem && serviceItem.id] || ''}
-                                                onChange={(e) => handleThingId(index, serviceItem.id, e.target.value)}
-                                            />
-                                        </label>
-                                        <label>
-                                            <span>Place: </span>
-                                            <input
-                                                type='text'
-                                                value={places[index] && places[index][serviceItem && serviceItem.id] || ''}
-                                                onChange={(e) => handlePlace(index, serviceItem.id, e.target.value)}
-                                            />
-                                        </label>
-                                    </div>
+                <div className='d-flex flex-column inputWrapper'>
+                    <div>
+                        <span className='FormText'>District</span>
+                    </div>
+                    <div className='complexes'>
+                        <label>
+                            <select className='selectBox' required onChange={(e)=> {handleDistrict(e)}} value={district}>
+                                <option className='optionItem'></option>
+                                { districts && districts.result.map(item =>(
+                                    <option className='optionItem' value={item.district_name} key={item.id}>{item.district_name}</option>
                                 ))}
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div className='d-flex flex-column inputWrapper'>
+                    <div>
+                        <span className='FormText'>Service</span>
+                    </div>
+                    <div className='complexes'>
+                        <label>
+                            <div className="proj-multi-select-dropdown-cont">
+                                <div>
+                                    {services && services.map((serviceItem, index) => (
+                                        <div key={index} className='d-flex flex-column inputWrapper'>
+                                            <span onClick={() => removeService(serviceItem, index)}>
+                                                {`${serviceItem.service_name}`} &#10005;
+                                            </span>
+                                            <label>
+                                                <span className='FormText'>ThingId: </span>
+                                                <input
+                                                    type='text'
+                                                    value={thingId[index] && thingId[index][serviceItem && serviceItem.id] || ''}
+                                                    onChange={(e) => handleThingId(index, serviceItem.id, e.target.value)}
+                                                    className='InputStyles'
+                                                />
+                                            </label>
+                                            <label>
+                                                <span className='FormText'>Place: </span>
+                                                <input
+                                                    type='text'
+                                                    value={places[index] && places[index][serviceItem && serviceItem.id] || ''}
+                                                    onChange={(e) => handlePlace(index, serviceItem.id, e.target.value)}
+                                                    className='InputStyles'
+                                                />
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                        <select className='selectBox' required onChange={(e)=> {handleService(e)}} value={district}>
-                            <option className='optionItem'></option>
-                            { buildingServices && buildingServices.result.map(item =>(
-                                <option className='optionItem' value={item.service_name} key={item.id}>{item.service_name}</option>
-                            ))}
-                        </select>
-                    </label>
+                            <select className='selectBox' required onChange={(e)=> {handleService(e)}} value={district}>
+                                <option className='optionItem'></option>
+                                { buildingServices && buildingServices.result.map(item =>(
+                                    <option className='optionItem' value={item.service_name} key={item.id}>{item.service_name}</option>
+                                ))}
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div className='d-flex flex-column inputWrapper'>
+                    <div>
+                        <span className='FormText'>Company</span>
+                    </div>
+                    <input
+                        className='InputStyles'
+                        type="text"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        placeholder="Enter company name"
+                    />
                 </div>
             </div>
-            <div className='RegisterFormWrapper'>
-                <div>
-                    <span className='RegisterFormText'>Company</span>
-                </div>
-                <input
-                    className='RegisterInputStyles'
-                    type="text"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    placeholder="Enter company name"
-                />
-            </div>
-            <div className='RegisterBtnContainer'>
+            <div className='container col-lg-3 d-flex justify-content-center BtnContainer buildingBtnCont'>
                 <button onClick={(e)=>{editing ? handleEdit(e) : handleSubmit(e)}} type="submit" className='RegisterBtn'>{editing ? "Update":"Register"}</button>
             </div>
         </div>

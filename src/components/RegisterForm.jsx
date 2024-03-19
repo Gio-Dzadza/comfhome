@@ -103,62 +103,62 @@ export default function RegisterForm() {
 
     return (
         <div className='container'>
-            <div className='d-flex flex-column align-items-center logo-nav-wrapper'>
-                <div className='row'>
-                    <div className='RegisterLogoWrapper'>
+            <div className='container d-flex flex-column logo-nav-wrapper'>
+                <div className='container col-lg-3'>
+                    <div className='LogoWrapper'>
                         <Link to="/">
                             <ComfortHomeLogo/>
                         </Link>
                     </div>
-                    <Link to="/" className='d-flex align-items-end RegisterTitleWrapper'>
+                    <Link to="/" className='d-flex align-items-end TitleWrapper'>
                         <div>
                             <BackBtnIcon/>
                         </div>
                         <div>
-                            <h2 className='d-flex RegisterTitle'>Registration</h2>
+                            <h2 className='d-flex Title'>Registration</h2>
                         </div>
                     </Link>
                 </div>
-                <div className='d-flex flex-column align-items-start form-wrapper'>
-                    <div className='d-flex flex-column RegisterFormWrapper'>
+                <div className='container col-lg-3 d-flex flex-column form-wrapper'>
+                    <div className='d-flex flex-column inputWrapper'>
                         <div>
-                            <span className='RegisterFormText'>Email</span>
+                            <span className='FormText'>Email</span>
                         </div>
                         <input
-                            className='RegisterInputStyles'
+                            className='InputStyles'
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter your Mail"
                         />
                     </div>
-                    <div className='d-flex flex-column RegisterFormWrapper'>
+                    <div className='d-flex flex-column inputWrapper'>
                         <div>
-                            <span className='RegisterFormText'>Password</span>
+                            <span className='FormText'>Password</span>
                         </div>
                         <input
-                            className='RegisterInputStyles'
+                            className='InputStyles'
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter your password"
                         />
                     </div>
-                    <div className='d-flex flex-column RegisterFormWrapper'>
+                    <div className='d-flex flex-column inputWrapper'>
                         <div>
-                            <span className='RegisterFormText'>Repeat Password</span>
+                            <span className='FormText'>Repeat Password</span>
                         </div>
                         <input
-                            className='RegisterInputStyles'
+                            className='InputStyles'
                             type="password"
                             value={repeatPassword}
                             placeholder="Repeat your password"
                             onChange={(e) => setRepeatPassword(e.target.value)}
                         />
                     </div>
-                    <div className='d-flex flex-column RegisterFormWrapper'>
+                    <div className='d-flex flex-column inputWrapper'>
                         <div>
-                            <span className='RegisterFormText'>Complex</span>
+                            <span className='FormText'>Complex</span>
                         </div>
                         <div className='complexes'>
                             <label>
@@ -171,24 +171,24 @@ export default function RegisterForm() {
                             </label>
                         </div>
                     </div>
-                    <div className='d-flex flex-column RegisterFormWrapper'>
+                    <div className='d-flex flex-column inputWrapper'>
                         <div>
-                            <span className='RegisterFormText'>Admin Name</span>
+                            <span className='FormText'>Admin Name</span>
                         </div>
                         <input
-                            className='RegisterInputStyles'
+                            className='InputStyles'
                             type="text"
                             value={adminName}
                             onChange={(e) => setAdminName(e.target.value)}
                             placeholder="Enter your name"
                         />
                     </div>
-                    <div className='d-flex flex-column RegisterFormWrapper'>
+                    <div className='d-flex flex-column inputWrapper'>
                         <div>
-                            <span className='RegisterFormText'>Admin Phone</span>
+                            <span className='FormText'>Admin Phone</span>
                         </div>
                         <div className='RegisterPhoneNumberFormText'>
-                            <span className="RegisterFormText">+995</span>
+                            <span className="FormText">+995</span>
                             <input
                                 type="text"
                                 value={adminPhone}
@@ -212,7 +212,7 @@ export default function RegisterForm() {
                             </div>
                         )
                     }
-                    <div className='d-flex justify-content-center RegisterBtnContainer'>
+                    <div className='d-flex justify-content-center BtnContainer'>
                         <button onClick={(e)=>{handleSubmit(e)}} type="submit" className='RegisterBtn'>Register</button>
                     </div>
                 </div>

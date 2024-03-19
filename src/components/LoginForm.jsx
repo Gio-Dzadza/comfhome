@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Axios from 'axios';
 import { useAuthContext } from '../hooks/useAuthContext';
-import '../pages/login/LoginPageStyles.css';
 import { ComfortHomeLogo } from "../assets/ComfortHomeSvgLogo";
 import { BackBtnIcon } from "../../src/assets/BackBtnIcon";
 import { Link, useNavigate } from "react-router-dom";
@@ -62,56 +61,66 @@ export default function LoginForm() {
     },[context]);
 
 return (
-    <div className='LoginPageWrapper'>
-        <div className='LoginPageLogoWrapper'>
-            <Link to="/">
-                <ComfortHomeLogo/>
-            </Link>
-        </div> 
-        <Link to="/" className='LoginPageTitleWrapper'>
-            <div>
-                <BackBtnIcon/>
+    <div className='container'>
+        <div className='container d-flex flex-column logo-nav-wrapper'>
+            <div className="container col-lg-3">
+                <div className='LogoWrapper'>
+                    <Link to="/">
+                        <ComfortHomeLogo/>
+                    </Link>
+                </div> 
+                <Link to="/" className='d-flex align-items-end TitleWrapper'>
+                    <div>
+                        <BackBtnIcon/>
+                    </div>
+                    <div>
+                        <h2 className='d-flex Title'>Login</h2>
+                    </div>
+                </Link>
             </div>
-            <div>
-                <h2 className='LoginPageTitle'>Login</h2>
-            </div>
-        </Link>
-        <div className='LoginPageFormWrapper'>
-            <div>
-                <span className='LoginPageFormText'>Email</span>
-            </div>
-            <input
-                ref={emailInputRef}
-                className='LoginPageInputStyles'
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-        </div>
-        <div className='LoginPageFormWrapper'>
-            <div>
-                <span className='LoginPageFormText'>Password</span>
-            </div>
-            <input
-                className='LoginPageInputStyles'
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-        </div>
-        <div className='LoginResult'>
-            {loggedUserName}
-        </div>
-        <div  className="LoginButtonsContainer">
-            <div>
-                <button className="LoginButtonStyles" onClick={login}>Login</button>
+            <div className='container col-lg-3 d-flex flex-column form-wrapper'>
+                <div className='d-flex flex-column inputWrapper'>
+                    <div>
+                        <span className='FormText'>Email</span>
+                    </div>
+                    <input
+                        ref={emailInputRef}
+                        className='InputStyles'
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
                 </div>
-            <div>
-                <button className="LoginButtonStyles" onClick={() => navigate('/register')}>Registration</button> 
-            </div>
-            <div>
-                <button className="LoginButtonStyles" onClick={() => navigate("/resetPassword")}>Forget Password</button>
+                <div className='d-flex flex-column inputWrapper'>
+                    <div>
+                        <span className='FormText'>Password</span>
+                    </div>
+                    <input
+                        className='InputStyles'
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className='d-flex flex-column align-items-center'>
+                    <div className='FormText'>
+                        {loggedUserName}
+                    </div>
+                </div>
+                <div  className="d-flex flex-column align-items-center">
+                    <div className='d-flex flex-column align-items-center BtnContainer'>
+                        <div className='d-flex justify-content-center login-btn'>
+                            <button className="LoginButtonStyles" onClick={login}>Login</button>
+                            </div>
+                        <div className='d-flex justify-content-center login-btn'>
+                            <button className="LoginButtonStyles" onClick={() => navigate('/register')}>Registration</button> 
+                        </div>
+                        <div className='d-flex justify-content-center login-btn'>
+                            <button className="LoginButtonStyles" onClick={() => navigate("/resetPassword")}>Forget Password</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

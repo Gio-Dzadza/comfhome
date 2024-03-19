@@ -5,8 +5,8 @@ import './UsersList.css' // Import the CSS file
 
 const CustomToolbar = () => {
     return (
-        <GridToolbarContainer style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <GridToolbar  
+        <GridToolbarContainer style={{ display: 'flex', justifyContent: 'center' }}>
+            {/* <GridToolbar  
                 // sx = {{
                 //     '& button':{
                 //         color: '#545454',
@@ -15,7 +15,7 @@ const CustomToolbar = () => {
                 //         }
                 //     },
                 // }}
-            />
+            /> */}
             <GridToolbarQuickFilter />
         </GridToolbarContainer>
     );

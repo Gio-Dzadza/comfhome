@@ -6,26 +6,24 @@ import { Link } from 'react-router-dom';
 
 //mui
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CustomToolbar from './CustomToolbar';
 
-//datepicker
-import 'react-datepicker/dist/react-datepicker.css';
-
 //style
 import './UsersList.css'
 import '../pages/ListsParentStyles.css';
+//export
+import * as XLSX from 'xlsx';
 
 
-export default function ComplexesList({ updateList, setUpdateList, setComplex, setEditing }) {
+export default function ComplexesList({ updateList, setUpdateList, setComplex, setEditing, handleFormSubmit }) {
     //for error and pending
     const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState(null);
 
     const {data:districtsList} = useFetch('http://localhost:3001/api/get/districts');
-    const [districts, setDistricts] = useState('');
     const [complexes, setComplexes] = useState('');
     const [districtNames, setDistrictNames] = useState([]);
     const [companyFilter] = useState('');
@@ -49,11 +47,10 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
                 {
                     ...signal,
                     headers: {
-                        "x-access-token": context.userAccessToken, // Include the token in the headers
+                        "x-access-token": context.userAccessToken,
                     },
                 }
                 ).then((response)=>{
-                    // console.log(response)
                     if(!response.data.auth){
                         setAuthenticated(true);
                     } else{
@@ -86,26 +83,56 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
         }
     },[context, updateList, setUpdateList]);
 
-    // console.log(context)
+    const formatDate = (dateString) => {
+        const options = { 
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        };
+        const formattedDate = new Date(dateString).toLocaleString('en-GB', options);
+        return formattedDate;
+    };
+
+    const exportToExcel = () => {
+            const dataToExport = complexes && complexes.map((complex) => [
+                complex.id,
+                complex.address,
+                complex.company,
+                districtsList && districtsList.result.find((distItem) => distItem.id === complex.district_id)?.district_name || '',
+                formatDate(complex.created_at ? complex.created_at : ''),
+                complex.changed_at ? formatDate(complex.changed_at) : 'სტატუსი არ შეცვლილა',
+            ]);
+            const workbook = XLSX.utils.book_new();
+            const worksheet = XLSX.utils.aoa_to_sheet([
+                ['Id', 'მისამართი', 'კომპანია', 'უბანი', 'შექმნილია', 'ცვლილება'],
+                ...dataToExport,
+            ]);
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Complexes');
+            const excelBuffer = XLSX.write(workbook, { type: 'buffer' });
+            const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'complexes.xlsx';
+            a.click();
+            URL.revokeObjectURL(url);
+            a.remove();
+        };
 
     const handleDelete = async(id)=>{
+        handleFormSubmit(id);
         try {
-            // Delete user from the API
             await Axios.delete(`http://localhost:3001/api/complexes/delete/${id}`, {
                 headers: {
-                    "x-access-token": context.userAccessToken, // Include the token in the headers
+                    "x-access-token": context.userAccessToken,
                 },
             }).then((response)=>{
-                // console.log(response);
-                // if(response.data.auth){
-                //     console.log(id + ' ' + response.data);
-                // } else{
-                //     console.log(id + ' ' + response.data.message);
-                //     setAuthenticated(true);
-                // };
                 if(response.data.deleted){
+                    handleFormSubmit(response.status);
                     console.log(id + ' ' + response.data.message);
-                    // Update the UI
                     const updatedUsers = complexes && complexes.filter((item)=> item.id !== id);
                     setComplexes(updatedUsers);
                     setAuthenticated(false);
@@ -121,19 +148,6 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
         setEditing(true);
     };
 
-    // const formatDate = (dateString) => {
-    //     const options = { 
-    //         day: '2-digit',
-    //         month: '2-digit',
-    //         year: 'numeric',
-    //         hour: '2-digit',
-    //         minute: '2-digit',
-    //         second: '2-digit',
-    //     };
-    //     const formattedDate = new Date(dateString).toLocaleString('en-GB', options);
-    //     return formattedDate;
-    // };
-
     useEffect(()=>{
         const distName = districtsList && districtsList.result.map((distitem) => distitem.district_name);
         setDistrictNames(distName);
@@ -146,6 +160,7 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
             flex: 1,
             headerClassName: 'column-headers',
             filterable: true,
+            filterValue: addressFilter,
             renderCell: (params) => {
                 const user = params.row;
                 return (
@@ -160,8 +175,8 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
             headerName: 'Company',
             flex: 1,
             headerClassName: 'column-headers',
-            filterable: true, // Enable filtering for this column
-            filterValue: companyFilter, // Use the filter state for this column
+            filterable: true, 
+            filterValue: companyFilter, 
         },
         {
             field: 'district_id',
@@ -170,11 +185,8 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
             headerClassName: 'column-headers',
             visible: true,
             type: 'singleSelect',
-            // valueOptions: departmentNames,
-            // filterValue: departmentNames,
             filterable: true,
             valueGetter: (params) => {
-                // console.log(typeof(params.row.district_id))
             const districtName = districtsList && districtsList.result.find(
                 (distitem) => distitem.id == params.row.district_id
             );
@@ -189,47 +201,30 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
             cellClassName: 'custom-cell',
             renderCell: (params) => (
                 <div className='actions-container'>
-                    <IconButton onClick={() => handleEdit(params.row)} color='blue' >
+                    <IconButton onClick={() => handleEdit(params.row)} color='blue' style={{ padding: 0 }}>
                         <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(params.row.id)} color='blue' style={{ opacity: 0.3 }}>
+                    <IconButton onClick={() => handleDelete(params.row.id)} color='blue' style={{ padding: 0 }}>
                         <DeleteIcon />
                     </IconButton>
                 </div>
             ),
         },
     ];
-    
 
-    // const filteredRows = complexes && complexes.filter((complex) => {
-    //     const districtName = districtsList && districtsList.result.find((distitem) => distitem.id === complex.district_id)?.district_name;
-    //     return (
-    //         complex && complex.address.toLowerCase().includes(addressFilter.toLowerCase()) ||
-    //         complex && complex.company.toLowerCase().includes(companyFilter.toLowerCase()) &&
-    //         (districtName && districtName.toLowerCase().includes(districtNames.toLowerCase()))
-    //     );
-    // });
-
+    const filteredRows = complexes && complexes.filter((complex) => {
+        const districtName = districtsList && districtsList.result.find((disItem) => disItem.id === complex.district_id)?.district_name;
+        return (
+            complex.address.toLowerCase().includes(addressFilter.toLowerCase()) ||
+            complex.company.toLowerCase().includes(companyFilter.toLowerCase()) &&
+            (districtName && districtName.toLowerCase().includes(districtNames.toLowerCase()))
+        );
+    });
 
 return (
-    <div className='list'>
+    <div className='container col-lg-3'>
         {isPending && <div>Loading complexes...</div>}
         {error && <div>{error}</div>}
-        {/* {
-            selectedUser && (
-                <div className={ selectedUser ? 'modal-window-show' : 'modal-window' }>
-                    <EditForm 
-                    user = {selectedUser} 
-                    setUsersList={setUsersList}
-                    setSelectedUser = {setSelectedUser}
-                    type = {types}
-                    status = {statuses}
-                    department = {department}
-                    setUpdateList = {setUpdateList}
-                    />
-                </div>
-            )
-        } */}
         {
             authenticated && (
                 <div>
@@ -239,77 +234,83 @@ return (
         }
         {!authenticated && (
             <>
-                <DataGrid
-                    sx={{
-                        boxShadow: 2,
-                        border: 2,
-                        borderColor: '#d5d5d5',
-                        '& .MuiDataGrid-cell:hover': {
-                            color: '#fda41c',
-                        },
-                    }}
-                    rows={complexes}
-                    columns={columns}
-                    autoHeight
-                    rowsPerPageOptions = {[5,10,20]}
-                    pageSize={pgSize}
-                    onPageSizeChange={(newPageSize)=> setPgSize(newPageSize)}
-                    pagination
-                    localeText={{
-                        toolbarDensity: 'რიგების ზომა',
-                        toolbarDensityComfortable: 'კომფორტული',
-                        toolbarDensityCompact: 'კომპაქტური',
-                        toolbarDensityStandard: 'სტანდარტული',
-                        
-                        toolbarExport: 'ექსპორტი',
-                        toolbarExportPrint: 'ამობეჭდვა',
-                        toolbarExportCSV: 'CSV ფორმატი',
+                <div className='coplexList'>
+                    <DataGrid
+                        sx={{
+                            // boxShadow: 2,
+                            // border: 2,
+                            // borderColor: '#d5d5d5',
+                            '& .MuiDataGrid-cell:hover': {
+                                color: 'green',
+                            },
+                            // '&, [class^=MuiDataGrid]': { border: 'none' }
+                        }}
+                        rows={complexes}
+                        // rows={filteredRows}
+                        columns={columns}
+                        // autoHeight
+                        rowsPerPageOptions = {[5,10,20]}
+                        pageSize={pgSize}
+                        onPageSizeChange={(newPageSize)=> setPgSize(newPageSize)}
+                        // pagination
+                        // hideFooterPagination
+                        // hideFooterSelectedRowCount
+                        localeText={{
+                            toolbarDensity: 'რიგების ზომა',
+                            toolbarDensityComfortable: 'კომფორტული',
+                            toolbarDensityCompact: 'კომპაქტური',
+                            toolbarDensityStandard: 'სტანდარტული',
+                            
+                            toolbarExport: 'ექსპორტი',
+                            toolbarExportPrint: 'ამობეჭდვა',
+                            toolbarExportCSV: 'CSV ფორმატი',
 
-                        toolbarFilters: 'ფილტრები',
-                        filterPanelOperator: 'ფილტრი',
-                        filterPanelOperatorAnd: 'And',
-                        filterPanelOperatorOr: 'Or',
-                        filterPanelColumns: 'სვეტები',
-                        filterPanelInputLabel: 'მიშვნელობა',
-                        filterPanelInputPlaceholder: 'ჩაწერე',
-                        filterOperatorContains: 'შეიცავს',
-                        filterOperatorEquals: 'უდრის',
-                        filterOperatorStartsWith: 'იწყება',
-                        filterOperatorEndsWith: 'მთავრდება',
-                        filterOperatorIsEmpty: 'ცარიელია',
-                        filterOperatorIsNotEmpty: 'არ არის ცარიელი',
-                        filterOperatorIsAnyOf: 'რომელიმეს შეიცავს',
+                            toolbarFilters: 'ფილტრები',
+                            filterPanelOperator: 'ფილტრი',
+                            filterPanelOperatorAnd: 'And',
+                            filterPanelOperatorOr: 'Or',
+                            filterPanelColumns: 'სვეტები',
+                            filterPanelInputLabel: 'მიშვნელობა',
+                            filterPanelInputPlaceholder: 'ჩაწერე',
+                            filterOperatorContains: 'შეიცავს',
+                            filterOperatorEquals: 'უდრის',
+                            filterOperatorStartsWith: 'იწყება',
+                            filterOperatorEndsWith: 'მთავრდება',
+                            filterOperatorIsEmpty: 'ცარიელია',
+                            filterOperatorIsNotEmpty: 'არ არის ცარიელი',
+                            filterOperatorIsAnyOf: 'რომელიმეს შეიცავს',
 
-                        toolbarColumns: 'სვეტები',
-                        columnsPanelTextFieldLabel: 'სვეტის ძიება',
-                        columnsPanelShowAllButton: 'აჩვენე ყველა',
-                        columnsPanelHideAllButton: 'დამალე ყველა',
-                        columnsPanelTextFieldPlaceholder: 'სვეტის სახელი',
+                            toolbarColumns: 'სვეტები',
+                            columnsPanelTextFieldLabel: 'სვეტის ძიება',
+                            columnsPanelShowAllButton: 'აჩვენე ყველა',
+                            columnsPanelHideAllButton: 'დამალე ყველა',
+                            columnsPanelTextFieldPlaceholder: 'სვეტის სახელი',
 
-                        toolbarQuickFilterPlaceholder: 'ძიება',
+                            toolbarQuickFilterPlaceholder: 'ძიება',
 
-                        columnMenuLabel: 'Menu',
-                        columnMenuShowColumns: 'აჩვენე სვეტი',
-                        columnMenuManageColumns: 'სვეტების მართვა',
-                        columnMenuFilter: 'ფილტრი',
-                        columnMenuHideColumn: 'დამალე სვეტი',
-                        columnMenuUnsort: 'Unsort',
-                        columnMenuSortAsc: 'დაალაგე ზრდადობის მიხედვით',
-                        columnMenuSortDesc: 'დაალაგე კლებადობის მიხედვით',
-                    }}   
-                    components={{
-                        Toolbar:  CustomToolbar,
-                    }}
-                    onStateChange={(e) => {
-                        setMuiFilteredUserCount(e.rowsMeta.positions.length)
-                    }}
+                            columnMenuLabel: 'Menu',
+                            columnMenuShowColumns: 'აჩვენე სვეტი',
+                            columnMenuManageColumns: 'სვეტების მართვა',
+                            columnMenuFilter: 'ფილტრი',
+                            columnMenuHideColumn: 'დამალე სვეტი',
+                            columnMenuUnsort: 'Unsort',
+                            columnMenuSortAsc: 'დაალაგე ზრდადობის მიხედვით',
+                            columnMenuSortDesc: 'დაალაგე კლებადობის მიხედვით',
+                        }}   
+                        components={{
+                            Toolbar:  CustomToolbar,
+                        }}
+                        onStateChange={(e) => {
+                            setMuiFilteredUserCount(e.rowsMeta.positions.length)
+                        }}
                     />
-                {/* <div className='counter-export'>
-                    {filteredRows && <h5 className='user-counter'>მომხმარებლები: {muiFilteredUserCount}</h5>}
-                    <Button onClick={exportToExcel} className='exportXLSX-btn'>
-                        Excel
-                    </Button>
-                </div> */}
+                </div>
+                <div className='container d-flex flex-column align-items-center listStat'>
+                    {filteredRows && <h5 className='user-counter'>კორპუსები: {muiFilteredUserCount}</h5>}
+                    <button onClick={exportToExcel} className='btn btn-secondary'>
+                        Export in Excel
+                    </button>
+                </div>
             </>
         )}
     </div>

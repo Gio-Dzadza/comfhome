@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ComfortHomeLogo } from "../assets/ComfortHomeSvgLogo";
 import { BackBtnIcon } from "../assets/BackBtnIcon";
 import { Link } from 'react-router-dom';
-import './ForgetPasswordStyles.css';
 import Axios from 'axios';
 
 
@@ -31,36 +30,42 @@ export default function PasswordResForm() {
     };
 
     return (
-        <div className='ForgetPasswordPageWrapper'>
-            <div className='ForgetPasswordLogoWrapper'>
-                <Link to="/">
-                    <ComfortHomeLogo />
-                </Link>
-            </div>
-            <Link to="/" className='ForgetPasswordTitleWrapper'>
-                <div>
-                    <BackBtnIcon/>
+        <div className='container'>
+            <div className='container d-flex flex-column logo-nav-wrapper'>
+                <div className='container col-lg-3'>
+                    <div className='LogoWrapper'>
+                        <Link to="/">
+                            <ComfortHomeLogo />
+                        </Link>
+                    </div>
+                    <Link to="/" className='d-flex align-items-end TitleWrapper'>
+                        <div>
+                            <BackBtnIcon/>
+                        </div>
+                        <div>
+                            <h2 className='d-flex Title'>Reset Your Password</h2>
+                        </div>
+                    </Link>
                 </div>
-                <div>
-                    <h2 className='ForgetPasswordTitle'>Reset Your Password</h2>
+                <div className='container col-lg-3 d-flex flex-column form-wrapper'>
+                    <div className='d-flex flex-column inputWrapper'>
+                        <div>
+                            <span className='FormText'>Enter your email address</span>
+                        </div>
+                        <form>
+                            <input
+                            className='InputStyles'
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            />
+                        </form>
+                    </div>
+                    <div className='d-flex justify-content-center BtnContainer'>
+                        <button onClick={(e)=>{handleSubmit(e)}} type="submit" className='RegisterBtn'>Send Reset Link</button>
+                    </div>
                 </div>
-            </Link>
-            <div className='ForgetPasswordFormWrapper'>
-                <div>
-                    <span className='ForgetPasswordFormText'>Enter your email address</span>
-                </div>
-                <form>
-                    <input
-                    className='ForgetPasswordInputStyles'
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    />
-                </form>
-            </div>
-            <div className='ForgetPasswordBtnContainer'>
-                <button onClick={(e)=>{handleSubmit(e)}} type="submit" className='ForgetPasswordBtn'>Send Reset Link</button>
             </div>
         </div>
     )

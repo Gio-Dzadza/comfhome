@@ -44,7 +44,7 @@ export default function AdminPage() {
     };
 
 return (
-    <div className="data-grid-parent">
+    <div className="container">
         {
             showPage && (
                 <>

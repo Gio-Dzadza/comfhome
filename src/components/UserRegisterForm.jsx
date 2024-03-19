@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext';
 import Axios from 'axios';
-import { Button } from '@mui/material';
 
 export default function UserRegisterForm({ handleFormSubmit, editing, setEditing, userPhone, setUserPhone, userId, setUserId }) {
     const [phone, setPhone] = useState('');
@@ -77,6 +76,7 @@ export default function UserRegisterForm({ handleFormSubmit, editing, setEditing
                 },
             });
             if (response.status === 200) {
+                console.log(response.data)
                 handleFormSubmit(); 
                 setPhone('');
                 setEditing(false);
@@ -92,17 +92,22 @@ export default function UserRegisterForm({ handleFormSubmit, editing, setEditing
     };
 
     return (
-        <div>
-            <div className='grid-parent-add-btn-container'>
-                <Button className='grid-parent-add-btn' onClick={(e)=>{editing ? handleEdit(e): handleSubmit(e)}}>{editing ? 'Edit User' : 'Add User'}</Button>
+        <div className='container col-lg-4 d-flex justify-content-between align-items-center userAddFormWrapper'>
+            <div style={{width:"103px"}}>
+                <button className='userAddBtn' onClick={(e)=>{editing ? handleEdit(e): handleSubmit(e)}}>{editing ? 'Edit User' : 'Add User'}</button>
             </div>
-            <div>
-                <span>+995</span>
-                <input 
-                    type="text" 
-                    value={phone}
-                    onChange={(e)=>{setPhone(e.target.value)}}
-                />
+            <div className=''>
+                <div className='d-flex flex-column'>
+                    <div className='RegisterUserPhoneNumberFormText'>
+                        <span className='FormText'>+995</span>
+                        <input 
+                            type="text" 
+                            value={phone}
+                            onChange={(e)=>{setPhone(e.target.value)}}
+                            className='userRegisterInputStylesPhone'
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     )

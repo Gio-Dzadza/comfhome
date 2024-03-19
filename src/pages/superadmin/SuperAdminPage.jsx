@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { Button } from '@mui/material';
 import '../ListsParentStyles.css';
 import ComplexRegForm from "../../components/ComplexRegForm";
 import ComplexesList from "../../components/ComplexesList";
@@ -44,6 +43,7 @@ export default function SuperAdminPage() {
     }
 
     const handleFormSubmit = (status) => {
+        console.log(status)
         if(editing){
             if(status === 200){
                 alert("Updated successfully");
@@ -60,19 +60,19 @@ export default function SuperAdminPage() {
     };
 
 return (
-    <div className="data-grid-parent">
+    <div className="container">
         {
             showPage && (
                 <>
                     {
-                        permission && (
-                            <div className='grid-parent-add-btn-container'>
-                                <Button className='grid-parent-add-btn' onClick={showForm}>Add Building</Button>
+                        permission && !editing && !showRegForm && (
+                            <div className='container col-lg-3 d-flex justify-content-center addBtnWrapper'>
+                                <button className='addBtn' onClick={showForm}>Add Building</button>
                             </div>
                         )
                     }
                     { showRegForm && (
-                        <div className={ showRegForm ? 'modal-window-show' : 'modal-window' }>
+                        <div className="container">
                             <ComplexRegForm 
                                 className='modal-content' 
                                 setShowRegForm={setShowRegForm} 
@@ -86,7 +86,7 @@ return (
                     ) 
                     }
                     { editing && (
-                        <div className={ editing ? 'modal-window-show' : 'modal-window' }>
+                        <div className="container">
                             <ComplexRegForm 
                                 className='modal-content' 
                                 setShowRegForm={setShowRegForm} 
@@ -99,12 +99,17 @@ return (
                         </div>
                     ) 
                     }
-                    <ComplexesList 
-                        updateList = {updateList} 
-                        setUpdateList = {setUpdateList} 
-                        setComplex={setComplex}
-                        setEditing={setEditing}
-                    />
+                    {
+                        !showRegForm && !editing && (
+                            <ComplexesList 
+                                updateList = {updateList} 
+                                setUpdateList = {setUpdateList} 
+                                setComplex={setComplex}
+                                setEditing={setEditing}
+                                handleFormSubmit={handleFormSubmit}
+                            />
+                        )
+                    }
                 </>
             ) 
         }
