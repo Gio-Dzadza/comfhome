@@ -1,5 +1,5 @@
-body {
-    margin: 0 auto;
+/* body {
+    margin: 0 auto !important;
     display: grid;
     place-items: center;
     max-width: 407px;
@@ -8,6 +8,11 @@ body {
     justify-content: start;
     font-family: "Prompt", sans-serif;
     grid-template-rows: max-content;
+} */
+body {
+    line-height: 1;
+    scroll-behavior: smooth;
+    transition: all 0.25s ease-in-out 0s;
 }
 
 button{
@@ -21,5 +26,5 @@ button{
 }
 
 h1, h2, h3, h4, h5{
-    margin: 0;
+    margin: 0 !important;
 }
