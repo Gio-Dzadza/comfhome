@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import '../ListsParentStyles.css';
 
 export default function Users() {
-    const[url, setUrl] = useState('http://localhost:3001/api/get');
+    const[url, setUrl] = useState('https://64.226.115.210/api/get');
     const[showRegForm, setShowRegForm] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [updateList, setUpdateList] = useState(false);
@@ -17,13 +17,10 @@ export default function Users() {
     
     useEffect(() => {
         if (formSubmitted) {
-          // Update the URL to trigger re-fetching of data in UsersList
             setUrl((prevUrl) => prevUrl + "?timestamp=" + Date.now());
-            setFormSubmitted(false); // Reset formSubmitted
+            setFormSubmitted(false);
         };
     }, [formSubmitted]);
-
-    console.log(url)
 
     useEffect(()=>{
         if(context.authIsReady){

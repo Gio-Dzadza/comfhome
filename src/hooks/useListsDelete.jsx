@@ -16,27 +16,23 @@ export const useListsDelete = () => {
         };
 
         try {
-            // Delete user from the API
-            const response = await Axios.delete(`http://localhost:3001/api/adminapi/lists/delete/${id}`, { 
+            const response = await Axios.delete(`https://64.226.115.210/api/adminapi/lists/delete/${id}`, { 
                 signal: controller.signal,
                 headers: {
-                    "x-access-token": context.userToken, // Include the token in the headers
+                    "x-access-token": context.userToken,
                 },
                 data: tableData
             });
-
             if (response.data.auth) {
                 console.log(id + ' ' + response.data);
             } else {
                 console.log(id + ' ' + response.data.message);
             }
-
             if (response.data.deleted) {
                 console.log(id + ' ' + response.data.message);
                 const updatedList = mainList.filter((item) => item.id !== id);
                 setMainList(updatedList);
             }
-
             setIsPending(false);
             setError(null);
         } catch (err) {

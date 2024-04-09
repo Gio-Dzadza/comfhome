@@ -8,7 +8,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import Axios from 'axios';
 
 export default function RegisterForm() {
-    const {data:complexesList} = useFetch('http://localhost:3001/api/get/complexes');
+    const {data:complexesList} = useFetch('https://64.226.115.210/api/get/complexes');
     const context = useAuthContext();
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -65,7 +65,7 @@ export default function RegisterForm() {
                 userTypeId
             };
             try{
-                const response = await Axios.post('http://localhost:3001/api/insert', admin, {
+                const response = await Axios.post('https://64.226.115.210/api/insert', admin, {
                     headers: {
                         "x-access-token": context.userAccessToken,
                         'Content-Type': 'multipart/form-data',

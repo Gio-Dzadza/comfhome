@@ -20,7 +20,6 @@ export const useFetch = (url)=>{
                     throw new Error(response.statusText);
                 }
                 const json = await response.json();
-
                 if (!controller.signal.aborted) {
                     setIsPending(false);
                     setData(json);

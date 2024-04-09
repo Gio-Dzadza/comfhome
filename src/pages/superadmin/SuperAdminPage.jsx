@@ -5,7 +5,7 @@ import ComplexRegForm from "../../components/ComplexRegForm";
 import ComplexesList from "../../components/ComplexesList";
 
 export default function SuperAdminPage() {
-    const[url, setUrl] = useState('http://localhost:3001/api/get/complexes');
+    const[url, setUrl] = useState('https://64.226.115.210/api/get/complexes');
     const[showRegForm, setShowRegForm] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [updateList, setUpdateList] = useState(false);
@@ -18,13 +18,10 @@ export default function SuperAdminPage() {
     
     useEffect(() => {
         if (formSubmitted) {
-          // Update the URL to trigger re-fetching of data in UsersList
             setUrl((prevUrl) => prevUrl + "?timestamp=" + Date.now());
-            setFormSubmitted(false); // Reset formSubmitted
+            setFormSubmitted(false); 
         };
     }, [formSubmitted]);
-
-    // console.log(url)
 
     useEffect(()=>{
         if(context.user){

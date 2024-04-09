@@ -16,12 +16,12 @@ export default function PasswordResForm() {
         };
 
         try{
-            const response = await Axios.post('http://localhost:3001/api/passres', admin);
+            const response = await Axios.post('https://64.226.115.210/api/passreset', admin);
             if(response && response.status === 200){
                 if(response.data.result.length === 0){
                     alert('No admin found with this email.')
                 }else{
-                    alert('Password reset email sent! Check your inbox.')
+                    alert('Temporary password was sent to your phone number! Check your phone and go to the login page.')
                 }
             }
         } catch (error){
@@ -63,7 +63,7 @@ export default function PasswordResForm() {
                         </form>
                     </div>
                     <div className='d-flex justify-content-center BtnContainer'>
-                        <button onClick={(e)=>{handleSubmit(e)}} type="submit" className='RegisterBtn'>Send Reset Link</button>
+                        <button onClick={(e)=>{handleSubmit(e)}} type="submit" className='RegisterBtn'>Send Temporary Password</button>
                     </div>
                 </div>
             </div>

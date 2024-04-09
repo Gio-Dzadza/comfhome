@@ -18,11 +18,9 @@ export const useLogout = ()=>{
     const logout = async()=>{
         setError(null);
         setIsPending(true);
-
-        //sign the user out
         try{
             const response = await Axios.post(
-                'http://localhost:3001/api/logout',
+                'https://64.226.115.210/api/logout',
                 {},
                 {
                     headers: {
@@ -31,20 +29,16 @@ export const useLogout = ()=>{
                     }
                 }
             );
-
             if (!response.data.logout) {
                 throw new Error(response.data.message || 'Logout failed');
             }
-
             context.dispatch({type:'LOGOUT'});
             console.log('loggedout')
-
             setIsPending(false);
             setError(null);
-
             redirectToLogin();
         }
-        catch(err){//aq standartulad
+        catch(err){
             console.log(err.message);
             setError(err.message);
             setIsPending(false);

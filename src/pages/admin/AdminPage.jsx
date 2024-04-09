@@ -5,7 +5,7 @@ import UsersList from "../../components/UsersList";
 import UserRegisterForm from "../../components/UserRegisterForm";
 
 export default function AdminPage() {
-    const[url, setUrl] = useState('http://localhost:3001/api/get');
+    const[url, setUrl] = useState('https://64.226.115.210/api/get');
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [updateList, setUpdateList] = useState(false);
     const [showPage, setShowPage] = useState(false);
@@ -13,18 +13,14 @@ export default function AdminPage() {
     const [editing, setEditing] = useState(false);
     const [userPhone, setUserPhone] = useState('');
     const [userId, setUserId] = useState('');
-
     const context = useAuthContext();
     
     useEffect(() => {
         if (formSubmitted) {
-          // Update the URL to trigger re-fetching of data in UsersList
             setUrl((prevUrl) => prevUrl + "?timestamp=" + Date.now());
-            setFormSubmitted(false); // Reset formSubmitted
+            setFormSubmitted(false); 
         };
     }, [formSubmitted]);
-
-    // console.log(url)
 
     useEffect(()=>{
         if(context.user){

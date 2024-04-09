@@ -1,6 +1,4 @@
-//react-router
 import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
-//pages and components
 import Login from './pages/login/Login';
 import { useAuthContext } from './hooks/useAuthContext';
 import Header from './components/Header';

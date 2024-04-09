@@ -28,10 +28,8 @@ export const AuthContextProvider = ({ children }) =>{
     })
 
     useEffect(()=>{
-        Axios.get('http://localhost:3001/api/login').then((response)=>{
-            // console.log(response)
+        Axios.get('https://64.226.115.210/api/login').then((response)=>{
             if(response.data.loggedIn){
-                // console.log(response)
                 dispatch({
                     type: 'AUTH_IS_READY', 
                     payload: {
@@ -42,10 +40,10 @@ export const AuthContextProvider = ({ children }) =>{
                 })
                 const accessToken = response.data.accessToken;
                 const decodedToken = jwtDecode(accessToken);
-                const currentTime = Date.now() / 1000; // Convert to seconds
+                const currentTime = Date.now() / 1000; 
                 if (decodedToken.exp < currentTime) {
                     const refreshAccessToken = ()=>{
-                        Axios.post('http://localhost:3001/api/refresh-token', {
+                        Axios.post('https://64.226.115.210/api/refresh-token', {
                             refreshToken: response.data.refreshToken,
                         })
                         .then((refreshResponse) => {
@@ -69,7 +67,7 @@ export const AuthContextProvider = ({ children }) =>{
                         });
                     };
                     refreshAccessToken();
-                    const refreshInterval = setInterval(refreshAccessToken, 901);
+                    const refreshInterval = setInterval(refreshAccessToken, 600000);
                     return () => {
                         clearInterval(refreshInterval);
                     };

@@ -1,14 +1,3 @@
-/* body {
-    margin: 0 auto !important;
-    display: grid;
-    place-items: center;
-    max-width: 407px;
-    width: 100%;
-    height: 100vh;
-    justify-content: start;
-    font-family: "Prompt", sans-serif;
-    grid-template-rows: max-content;
-} */
 body {
     line-height: 1;
     scroll-behavior: smooth;

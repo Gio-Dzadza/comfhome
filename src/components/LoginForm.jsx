@@ -22,7 +22,7 @@ export default function LoginForm() {
     const login = ()=>{
         setEmail('');
         setPassword('');
-        Axios.post('http://localhost:3001/api/login', {
+        Axios.post('https://64.226.115.210/api/login', {
             email,
             password
         }).then((response)=>{
@@ -50,11 +50,10 @@ export default function LoginForm() {
 
     useEffect(()=>{
         Axios.defaults.withCredentials = true;
-        Axios.get('http://localhost:3001/api/login').then((response)=>{
+        Axios.get('https://64.226.115.210/api/login').then((response)=>{
             if(response.data.loggedIn){
                 setLoggedUserName('');
             } else{
-                // setLoggedUserName('გთხოვთ შეიყვანეთ თქვენი მონაცემები');
                 emailInputRef.current.focus();
             }
         });
