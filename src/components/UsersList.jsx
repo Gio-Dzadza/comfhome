@@ -18,7 +18,7 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
         setIsPending(true);
         try {
             const response = await Axios.get(
-                'https://64.226.115.210/api/get',
+                'https://admincomforthome.online/api/get',
                 {
                     ...signal,
                     headers: {
@@ -64,7 +64,7 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
 
     const handleDelete = async (id)=>{
         try{
-            await Axios.delete(`https://64.226.115.210/api/delete/${id}`, {
+            await Axios.delete(`https://admincomforthome.online/api/delete/${id}`, {
                 headers: {
                     "x-access-token": context.userAccessToken, // Include the token in the headers
                 },
@@ -115,7 +115,7 @@ export default function UsersList({updateList, setUpdateList, setEditing, setUse
                                 >
                                     <div className='userImageContainer'>
                                         <img className='userImage'
-                                            src={item.avatar ? `https://64.226.115.210/uploads/users/${item.id}/${item.avatar}` : UserDefault} 
+                                            src={item.avatar ? `https://admincomforthome.online/uploads/users/${item.id}/${item.avatar}` : UserDefault} 
                                             alt="userAvatar" 
                                         />
                                     </div>

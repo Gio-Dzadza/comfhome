@@ -23,7 +23,7 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
     const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState(null);
 
-    const {data:districtsList} = useFetch('https://64.226.115.210/api/get/districts');
+    const {data:districtsList} = useFetch('https://admincomforthome.online/api/get/districts');
     const [complexes, setComplexes] = useState('');
     const [districtNames, setDistrictNames] = useState([]);
     const [companyFilter] = useState('');
@@ -43,7 +43,7 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
         setIsPending(true);
         try {
             const response = await Axios.get(
-                'https://64.226.115.210/api/get/complexes',
+                'https://admincomforthome.online/api/get/complexes',
                 {
                     ...signal,
                     headers: {
@@ -125,7 +125,7 @@ export default function ComplexesList({ updateList, setUpdateList, setComplex, s
     const handleDelete = async(id)=>{
         handleFormSubmit(id);
         try {
-            await Axios.delete(`https://64.226.115.210/api/complexes/delete/${id}`, {
+            await Axios.delete(`https://admincomforthome.online/api/complexes/delete/${id}`, {
                 headers: {
                     "x-access-token": context.userAccessToken,
                 },

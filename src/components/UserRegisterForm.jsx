@@ -45,7 +45,7 @@ export default function UserRegisterForm({ handleFormSubmit, editing, setEditing
         };
         handleFormSubmit(userInfo);
         try{
-            const response = await Axios.post('https://64.226.115.210/api/insertPhone', userInfo, {
+            const response = await Axios.post('https://admincomforthome.online/api/insertPhone', userInfo, {
                 headers: {
                     "x-access-token": context.userAccessToken,
                     'Content-Type': 'multipart/form-data',
@@ -69,7 +69,7 @@ export default function UserRegisterForm({ handleFormSubmit, editing, setEditing
         };
         handleFormSubmit(userInfo);
         try{
-            const response = await Axios.put(`https://64.226.115.210/api/updatePhone/${userId}`, userInfo, {
+            const response = await Axios.put(`https://admincomforthome.online/api/updatePhone/${userId}`, userInfo, {
                 headers: {
                     "x-access-token": context.userAccessToken,
                     'Content-Type': 'multipart/form-data',

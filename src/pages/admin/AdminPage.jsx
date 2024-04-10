@@ -5,7 +5,7 @@ import UsersList from "../../components/UsersList";
 import UserRegisterForm from "../../components/UserRegisterForm";
 
 export default function AdminPage() {
-    const[url, setUrl] = useState('https://64.226.115.210/api/get');
+    const[url, setUrl] = useState('https://admincomforthome.online/api/get');
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [updateList, setUpdateList] = useState(false);
     const [showPage, setShowPage] = useState(false);

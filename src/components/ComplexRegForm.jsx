@@ -6,9 +6,9 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import Axios from 'axios';
 
 export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editing, setEditing, complex, setComplex}) {
-    const {data:districts} = useFetch('https://64.226.115.210/api/get/districts');
-    const {data:servtoComplex} = useFetch('https://64.226.115.210/api/get/servtocomplex');
-    const {data:buildingServices} = useFetch('https://64.226.115.210/api/get/builservices');
+    const {data:districts} = useFetch('https://admincomforthome.online/api/get/districts');
+    const {data:servtoComplex} = useFetch('https://admincomforthome.online/api/get/servtocomplex');
+    const {data:buildingServices} = useFetch('https://admincomforthome.online/api/get/builservices');
 
     const context = useAuthContext();
     const [address, setAddress] = useState("");
@@ -97,7 +97,7 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
         }
         handleFormSubmit(formData);
         try{
-            const response = await Axios.post('https://64.226.115.210/api/complexes/insert', formData, {
+            const response = await Axios.post('https://admincomforthome.online/api/complexes/insert', formData, {
                 headers: {
                     "x-access-token": context.userAccessToken,
                     'Content-Type': 'multipart/form-data',
@@ -136,7 +136,7 @@ export default function ComplexRegForm({setShowRegForm, handleFormSubmit, editin
         }
         handleFormSubmit(formData);
         try{
-            const response = await Axios.put(`https://64.226.115.210/api/updateComplex/${complex.id}`, formData, {
+            const response = await Axios.put(`https://admincomforthome.online/api/updateComplex/${complex.id}`, formData, {
                 headers: {
                     "x-access-token": context.userAccessToken,
                     'Content-Type': 'multipart/form-data',

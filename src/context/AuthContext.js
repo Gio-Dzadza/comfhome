@@ -28,7 +28,7 @@ export const AuthContextProvider = ({ children }) =>{
     })
 
     useEffect(()=>{
-        Axios.get('https://64.226.115.210/api/login').then((response)=>{
+        Axios.get('https://admincomforthome.online/api/login').then((response)=>{
             if(response.data.loggedIn){
                 dispatch({
                     type: 'AUTH_IS_READY', 
@@ -43,7 +43,7 @@ export const AuthContextProvider = ({ children }) =>{
                 const currentTime = Date.now() / 1000; 
                 if (decodedToken.exp < currentTime) {
                     const refreshAccessToken = ()=>{
-                        Axios.post('https://64.226.115.210/api/refresh-token', {
+                        Axios.post('https://admincomforthome.online/api/refresh-token', {
                             refreshToken: response.data.refreshToken,
                         })
                         .then((refreshResponse) => {

@@ -5,7 +5,7 @@ import ComplexRegForm from "../../components/ComplexRegForm";
 import ComplexesList from "../../components/ComplexesList";
 
 export default function SuperAdminPage() {
-    const[url, setUrl] = useState('https://64.226.115.210/api/get/complexes');
+    const[url, setUrl] = useState('https://admincomforthome.online/api/get/complexes');
     const[showRegForm, setShowRegForm] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [updateList, setUpdateList] = useState(false);

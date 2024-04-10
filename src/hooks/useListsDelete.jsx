@@ -16,7 +16,7 @@ export const useListsDelete = () => {
         };
 
         try {
-            const response = await Axios.delete(`https://64.226.115.210/api/adminapi/lists/delete/${id}`, { 
+            const response = await Axios.delete(`https://admincomforthome.online/api/adminapi/lists/delete/${id}`, { 
                 signal: controller.signal,
                 headers: {
                     "x-access-token": context.userToken,

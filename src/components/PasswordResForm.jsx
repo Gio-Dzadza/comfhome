@@ -16,7 +16,7 @@ export default function PasswordResForm() {
         };
 
         try{
-            const response = await Axios.post('https://64.226.115.210/api/passreset', admin);
+            const response = await Axios.post('https://admincomforthome.online/api/passreset', admin);
             if(response && response.status === 200){
                 if(response.data.result.length === 0){
                     alert('No admin found with this email.')

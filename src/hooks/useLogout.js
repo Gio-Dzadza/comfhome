@@ -20,7 +20,7 @@ export const useLogout = ()=>{
         setIsPending(true);
         try{
             const response = await Axios.post(
-                'https://64.226.115.210/api/logout',
+                'https://admincomforthome.online/api/logout',
                 {},
                 {
                     headers: {
